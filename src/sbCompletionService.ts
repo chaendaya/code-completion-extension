@@ -109,7 +109,7 @@ export class SbCompletionService {
     // * 로컬 JSON 파일에서 구조적 후보 데이터를 로드
     private loadCandidateDB(extensionPath: string) {
       try {
-        const jsonPath = path.join(extensionPath, 'src', 'smallbasic_candidates.json');
+        const jsonPath = path.join(extensionPath, 'src', 'smallbasic_candidates2.json');
         console.log(`[Info] Loading Candidate DB from: ${jsonPath}`);
         
         if (fs.existsSync(jsonPath)) {

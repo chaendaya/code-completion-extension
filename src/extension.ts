@@ -130,17 +130,23 @@ export function activate(context: vscode.ExtensionContext) {
           ): Promise<vscode.CompletionItem[]> {
             const completionItems: vscode.CompletionItem[] = [];
 
-            // candidatesData가 아직 없으면 빈 배열
+            // candidatesData가 없으면 더미 아이템 반환
+            // (빈 배열을 반환하면 VS Code 기본 단어 자동완성이 대신 채우므로,
+            //  더미 아이템으로 팝업을 점유하여 식별자 목록을 억제)
+            const lineContext = document.lineAt(position).text.slice(0, position.character);
             if (!candidatesData || candidatesData.length === 0) {
-              return completionItems;
+              const placeholder = new vscode.CompletionItem("(No candidates found)");
+              placeholder.insertText = new vscode.SnippetString("");
+              placeholder.filterText = lineContext;
+              placeholder.sortText = "000";
+              return [placeholder];
             }
             
             // candidatesData가 있으면 VS Code UI 객체화
 
             // [트릭] 추천하는 구조를 무조건 보여줌
             // VS Code는 자동완성 목록을 띄울 때, 사용자가 지금까지 타이핑한 단어(Prefix)와 추천 목록의 라벨(Label)을 비교
-            // 구조 후보 목록이 즉시 제거되는 VS Code 기본 동작을 속이기 위함 
-            const lineContext = document.lineAt(position).text.slice(0, position.character);
+            // 구조 후보 목록이 즉시 제거되는 VS Code 기본 동작을 속이기 위함
 
             // 상위 20개 출력
             const maxScroll = 20;

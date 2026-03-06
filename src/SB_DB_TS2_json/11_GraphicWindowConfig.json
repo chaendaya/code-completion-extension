@@ -1,0 +1,64 @@
+{
+  "1": [
+    {
+      "key": "ID . ID = Expr",
+      "value": 1
+    }
+  ],
+  "25": [
+    {
+      "key": ")",
+      "value": 1
+    }
+  ],
+  "75": [
+    {
+      "key": "STR",
+      "value": 2
+    },
+    {
+      "key": "NUM",
+      "value": 2
+    }
+  ],
+  "97": [
+    {
+      "key": "ID . ID = Expr",
+      "value": 3
+    },
+    {
+      "key": "ID . ID ( )",
+      "value": 1
+    }
+  ],
+  "188": [
+    {
+      "key": ". ID = Expr",
+      "value": 4
+    },
+    {
+      "key": ". ID ( )",
+      "value": 1
+    }
+  ],
+  "214": [
+    {
+      "key": "= Expr",
+      "value": 4
+    },
+    {
+      "key": "( )",
+      "value": 1
+    }
+  ],
+  "259": [
+    {
+      "key": "ID = Expr",
+      "value": 4
+    },
+    {
+      "key": "ID ( )",
+      "value": 1
+    }
+  ]
+}

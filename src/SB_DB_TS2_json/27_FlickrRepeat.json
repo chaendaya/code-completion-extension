@@ -1,0 +1,150 @@
+{
+  "1": [
+    {
+      "key": "Stmt_token4 ID = Expr Stmt_token5 Expr CRStmtCRs Stmt_token6",
+      "value": 1
+    }
+  ],
+  "5": [
+    {
+      "key": ". ID ( Exprs )",
+      "value": 1
+    }
+  ],
+  "24": [
+    {
+      "key": "( Exprs )",
+      "value": 1
+    }
+  ],
+  "26": [
+    {
+      "key": "STR",
+      "value": 1
+    }
+  ],
+  "27": [
+    {
+      "key": "ID",
+      "value": 1
+    }
+  ],
+  "54": [
+    {
+      "key": "NUM",
+      "value": 4
+    }
+  ],
+  "58": [
+    {
+      "key": "NUM",
+      "value": 1
+    }
+  ],
+  "60": [
+    {
+      "key": "NUM",
+      "value": 1
+    }
+  ],
+  "70": [
+    {
+      "key": "ID . ID ( Exprs )",
+      "value": 1
+    }
+  ],
+  "88": [
+    {
+      "key": "ID = Expr",
+      "value": 1
+    }
+  ],
+  "96": [
+    {
+      "key": "ID . ID ( Exprs )",
+      "value": 1
+    }
+  ],
+  "140": [
+    {
+      "key": "CR_token2",
+      "value": 1
+    }
+  ],
+  "184": [
+    {
+      "key": "= Expr",
+      "value": 1
+    },
+    {
+      "key": ". ID ( Exprs )",
+      "value": 1
+    }
+  ],
+  "189": [
+    {
+      "key": "Stmt_token6",
+      "value": 1
+    }
+  ],
+  "203": [
+    {
+      "key": "CR_token2",
+      "value": 2
+    }
+  ],
+  "217": [
+    {
+      "key": ", MoreThanOneExpr",
+      "value": 4
+    }
+  ],
+  "221": [
+    {
+      "key": "( Exprs )",
+      "value": 1
+    }
+  ],
+  "232": [
+    {
+      "key": "= Expr Stmt_token5 Expr CRStmtCRs Stmt_token6",
+      "value": 1
+    }
+  ],
+  "234": [
+    {
+      "key": "ID = Expr Stmt_token5 Expr CRStmtCRs Stmt_token6",
+      "value": 1
+    }
+  ],
+  "238": [
+    {
+      "key": ")",
+      "value": 1
+    }
+  ],
+  "249": [
+    {
+      "key": ")",
+      "value": 1
+    }
+  ],
+  "255": [
+    {
+      "key": "ID ( Exprs )",
+      "value": 1
+    }
+  ],
+  "258": [
+    {
+      "key": "Stmt_token5 Expr CRStmtCRs Stmt_token6",
+      "value": 1
+    }
+  ],
+  "260": [
+    {
+      "key": "ID ( Exprs )",
+      "value": 1
+    }
+  ]
+}

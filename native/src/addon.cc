@@ -25,7 +25,7 @@ extern "C" TSLanguage *tree_sitter_smallbasic();
 // 커스텀 파서 로직 함수 (lib/src/parser.c에 구현됨)
 extern "C" {
     // 1. 컨버전 로직 실행
-    TSStatePath ts_parser_run_conversion(TSParser *self);
+    TSStatePath ts_parser_parse_string_for_conversion(TSParser *self, const TSTree *old_tree, const char *string, uint32_t length);
 
     // 2. 컨버전 결과 출력 (파일 or 화면)
     void ts_parser_write_conversion_result(TSParser *self, TSStatePath *path, FILE *fp);
@@ -138,7 +138,9 @@ Napi::Value GetConversionResult(const Napi::CallbackInfo& info) {
     ts_parser_write_logged_actions(parser, "logged_actions.txt");
 
     // 6. 컨버전 로직 적용
-    TSStatePath path = ts_parser_run_conversion(parser);
+    TSStatePath path = ts_parser_parse_string_for_conversion(
+        parser, NULL, source_code.c_str(), static_cast<uint32_t>(effective_length)
+    );
     ts_parser_write_conversion_result(parser, &path, stdout);
     
     Napi::Array js_array = Napi::Array::New(env, path.count);
