@@ -18,7 +18,7 @@
       {
         "command": "extension.triggerParsing",
         "key": "ctrl+space",
-        "when": "editorTextFocus && !suggestWidgetVisible"
+        "when": "editorTextFocus && !suggestWidgetVisible && (editorLangId == 'smallbasic' || editorLangId == 'c')"
       }
     ],
     "languages": [

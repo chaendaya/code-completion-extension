@@ -68,13 +68,13 @@
 
 // [수정 후: 엄격한 페르소나 설정]
 export const SYSTEM_ROLE = `
-You are a strict code completion engine for Microsoft Small Basic.
+You are a strict code completion engine.
 Your goal is to generate code based on a provided syntax structure.
 
 RULES:
 1. Output ONLY the code snippet.
 2. DO NOT include conversational text (e.g., "Here is the code", "Sure").
-3. DO NOT include markdown backticks (e.g., \`\`\`smallbasic).
+3. DO NOT include markdown backticks.
 4. DO NOT explain the code.
 5. If the context is insufficient, generate a plausible dummy variable or value (e.g., "x", "10", "Hello").
 `;
@@ -106,9 +106,9 @@ RULES:
 // Output:`;
 // }
 
-export function generateCompletionPrompt(fullContext: string, structCandidate: string): string {
+export function generateCompletionPrompt(fullContext: string, structCandidate: string, languageName: string): string {
     return `
-This is the incomplete Small Basic code: ${fullContext}  '${structCandidate}'
-Complete the '${structCandidate}' part of the code in the Small Basic.
+This is the incomplete ${languageName} code: ${fullContext}  '${structCandidate}'
+Complete the '${structCandidate}' part of the code in ${languageName}.
 Just show your answer in place of '${structCandidate}'`;
 }

@@ -19,8 +19,16 @@
 // C 언어로 작성된 Tree-sitter 파서 및 내부 함수들을 링크하기 위한 선언
 // =============================================================================
 
-// SmallBasic 언어 정의 함수 (generated parser에서 제공)
-extern "C" TSLanguage *tree_sitter_smallbasic();
+// 언어 정의 함수 — binding.gyp의 defines로 컴파일 시 언어 결정
+#if defined(LANG_SMALLBASIC)
+    extern "C" TSLanguage *tree_sitter_smallbasic();
+    #define GET_LANGUAGE() tree_sitter_smallbasic()
+#elif defined(LANG_C)
+    extern "C" TSLanguage *tree_sitter_c();
+    #define GET_LANGUAGE() tree_sitter_c()
+#else
+    #error "언어 정의 없음: binding.gyp의 defines에 LANG_SMALLBASIC 또는 LANG_C를 추가하세요."
+#endif
 
 // 커스텀 파서 로직 함수 (lib/src/parser.c에 구현됨)
 extern "C" {
@@ -115,7 +123,7 @@ Napi::Value GetConversionResult(const Napi::CallbackInfo& info) {
     uint32_t stop_col_in = info[2].As<Napi::Number>().Uint32Value();
 
     // 3. Tree-sitter 파서 초기화
-    TSLanguage *language = tree_sitter_smallbasic();
+    TSLanguage *language = GET_LANGUAGE();
     TSParser *parser = ts_parser_new();
     ts_parser_set_language(parser, language);
 
