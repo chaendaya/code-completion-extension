@@ -194,10 +194,11 @@ export class CompletionService {
     // helper
     private convertKeyToReadable(rawKeyString: string, mapper: TokenMapper): string {
         try {
-            const content = rawKeyString.replace(/^\[|\]$/g, "");
-            const tokens = content.split(",").map(t => t.trim());
+            // DB key는 공백으로 구분된 토큰 나열 형식 ("ID = Expr", "[ expression ]" 등)
+            // 각 토큰을 공백으로 분리 후 token_mapping으로 변환
+            const tokens = rawKeyString.split(" ").filter(t => t.length > 0);
             const convertedTokens = tokens.map(token => mapper.getHumanReadableName(token));
-            return `[${convertedTokens.join(", ")}]`;
+            return convertedTokens.join(" ");
         } catch (e) {
             return rawKeyString;
         }
