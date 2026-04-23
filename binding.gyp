@@ -266,36 +266,6 @@
           "ExceptionHandling": 1
         }
       }
-    },
-    {
-      "target_name": "typescript_parser_addon",
-      "cflags!": [
-        "-fno-exceptions"
-      ],
-      "cflags_cc!": [
-        "-fno-exceptions"
-      ],
-      "sources": [
-        "native/src/addon.cc",
-        "../tree-sitter/lib/src/lib.c",
-        "../tree-sitter-typescript/typescript/src/parser.c",
-        "../tree-sitter-typescript/typescript/src/scanner.c"
-      ],
-      "include_dirs": [
-        "<!@(node -p \"require('node-addon-api').include\")",
-        "../tree-sitter/lib/include",
-        "../tree-sitter/lib/src",
-        "../tree-sitter-typescript/typescript/src"
-      ],
-      "defines": [
-        "NAPI_DISABLE_CPP_EXCEPTIONS",
-        "LANG_TYPESCRIPT"
-      ],
-      "msvs_settings": {
-        "VCCLCompilerTool": {
-          "ExceptionHandling": 1
-        }
-      }
     }
   ]
 }

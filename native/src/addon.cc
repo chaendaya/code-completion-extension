@@ -47,9 +47,6 @@
 #elif defined(LANG_SMALLBASIC)
     extern "C" TSLanguage *tree_sitter_smallbasic();
     #define GET_LANGUAGE() tree_sitter_smallbasic()
-#elif defined(LANG_TYPESCRIPT)
-    extern "C" TSLanguage *tree_sitter_typescript();
-    #define GET_LANGUAGE() tree_sitter_typescript()
 #else
     #error "언어 정의 없음: generate_build_config.py를 실행하세요."
 #endif
