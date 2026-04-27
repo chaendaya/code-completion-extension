@@ -102,7 +102,8 @@ parent/
 디렉토리 구조 준비 완료 후, `code-completion-extension/` 안에서:
 
 ```bash
-npm ci                              # 또는 npm install
+binding.gyp 삭제
+npm install
 python3 generate_build_config.py    # Windows: python generate_build_config.py
 npx node-gyp rebuild
 npm run compile
@@ -113,7 +114,6 @@ npm run compile
 
 VS Code에서 `code-completion-extension` 폴더를 열고 **F5**. Extension Development Host 창이 뜨면 거기서 지원 언어 파일을 열고 `Ctrl+Space`.
 
-([지원언어 테스트 파일 모음](../codecompletion_benchmarks.zip))
 
 <br>
 
