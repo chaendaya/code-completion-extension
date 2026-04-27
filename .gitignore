@@ -13,7 +13,10 @@ logged_actions.txt
 Test.data
 
 # 5. VS Code 설정 및 패키징 파일 (Editor & Packaging)
-.vscode/
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
 *.vsix
 
 # 6. LLM 실험 산출물 (Evaluation Outputs)
