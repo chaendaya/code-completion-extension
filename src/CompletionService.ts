@@ -210,8 +210,9 @@ export class CompletionService {
     // =========================================================================
     public getStructCandidates() {
         try {
-            console.log(`[${this.config.displayName}] Requesting Parse: byteOffset ${this.byteOffset}`);
-            const states = this.parserAddon.getConversionResult(this.fullText, this.byteOffset);
+            const mode = vscode.workspace.getConfiguration('completion').get<number>('parsingMode', 0);
+            console.log(`[${this.config.displayName}] Requesting Parse: byteOffset ${this.byteOffset}, mode=${mode}`);
+            const states = this.parserAddon.getConversionResult(this.fullText, this.byteOffset, mode);
             console.log("Parsed State Path:", JSON.stringify(states));
 
             const structCandidates = this.lookupDB(states);

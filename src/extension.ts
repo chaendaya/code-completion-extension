@@ -328,12 +328,27 @@ export function activate(context: vscode.ExtensionContext) {
       }
   );
 
+  // =============================================================================
+  // [Toggle] 파싱 모드 0 ↔ 2 전환
+  // =============================================================================
+  const toggleParsingModeCommand = vscode.commands.registerCommand(
+    "extension.toggleParsingMode",
+    async () => {
+      const cfg = vscode.workspace.getConfiguration('completion');
+      const cur = cfg.get<number>('parsingMode', 0);
+      const next = cur === 0 ? 2 : 0;
+      await cfg.update('parsingMode', next, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage(`Parsing mode → ${next}`);
+    }
+  );
+
   context.subscriptions.push(
     structuralProvider,
     llmProvider,
     generateCodeCommand,
     previewStructuresCommand,
-    triggerParsingCommand
+    triggerParsingCommand,
+    toggleParsingModeCommand
   );
 }
 

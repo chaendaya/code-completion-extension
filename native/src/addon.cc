@@ -53,8 +53,11 @@
 
 // 커스텀 파서 로직 함수 (lib/src/parser.c에 구현됨)
 extern "C" {
-    // 1. 컨버전 로직 실행
+    // 1. 컨버전 로직 실행 (모드 0: 잘린 소스)
     TSStatePath ts_parser_parse_string_for_conversion(TSParser *self, const TSTree *old_tree, const char *string, uint32_t length);
+
+    // 1-b. 컨버전 로직 실행 (모드 2: 전체 소스 + 커서 위치, 렉서 lookahead 활용)
+    TSStatePath ts_parser_parse_string_for_conversion_with_lookahead(TSParser *self, const TSTree *old_tree, const char *string, uint32_t full_length, uint32_t cursor_byte);
 
     // 2. 컨버전 결과 출력 (파일 or 화면)
     void ts_parser_write_conversion_result(TSParser *self, TSStatePath *path, FILE *fp);
@@ -69,10 +72,11 @@ extern "C" {
 /**
  * @brief JS에서 호출 가능한 파싱 및 컨버전 실행 함수
  *
- * Signature: getConversionResult(sourceCode: string, byteOffset: number) -> number[]
+ * Signature: getConversionResult(sourceCode: string, byteOffset: number, mode?: 0|2) -> number[]
  *
  * @param info[0] sourceCode (string): 전체 소스 코드
  * @param info[1] byteOffset (number): 커서 위치의 UTF-8 바이트 오프셋
+ * @param info[2] mode (number, optional): 0=Cut(기본), 2=Lookahead
  * @return array 컨버전 결과 (상태 경로)
  */
 Napi::Value GetConversionResult(const Napi::CallbackInfo& info) {
@@ -80,13 +84,16 @@ Napi::Value GetConversionResult(const Napi::CallbackInfo& info) {
 
     // 1. 인자 유효성 검사
     if (info.Length() < 2) {
-        Napi::TypeError::New(env, "Args: sourceCode, byteOffset").ThrowAsJavaScriptException();
+        Napi::TypeError::New(env, "Args: sourceCode, byteOffset, [mode]").ThrowAsJavaScriptException();
         return env.Null();
     }
 
     // 2. 인자 추출
     std::string source_code = info[0].As<Napi::String>().Utf8Value();
     uint32_t byte_offset = info[1].As<Napi::Number>().Uint32Value();
+    uint32_t mode = (info.Length() >= 3 && info[2].IsNumber())
+        ? info[2].As<Napi::Number>().Uint32Value()
+        : 0;
 
     // 3. Tree-sitter 파서 초기화
     TSLanguage *language = GET_LANGUAGE();
@@ -104,10 +111,21 @@ Napi::Value GetConversionResult(const Napi::CallbackInfo& info) {
     // [로그 덤프] logged_actions.txt 저장
     ts_parser_write_logged_actions(parser, "logged_actions.txt");
 
-    // 6. 컨버전 로직 적용
-    TSStatePath path = ts_parser_parse_string_for_conversion(
-        parser, NULL, source_code.c_str(), static_cast<uint32_t>(effective_length)
-    );
+    // 6. 컨버전 로직 적용 (모드별 분기)
+    TSStatePath path;
+    if (mode == 2) {
+        // 모드 2: 전체 소스 전달 + 커서 위치 별도 (렉서 lookahead 활용)
+        path = ts_parser_parse_string_for_conversion_with_lookahead(
+            parser, NULL, source_code.c_str(),
+            static_cast<uint32_t>(source_code.length()),
+            static_cast<uint32_t>(effective_length)
+        );
+    } else {
+        // 모드 0 (기본): 커서 위치까지 잘라서 전달
+        path = ts_parser_parse_string_for_conversion(
+            parser, NULL, source_code.c_str(), static_cast<uint32_t>(effective_length)
+        );
+    }
     ts_parser_write_conversion_result(parser, &path, stdout);
     
     Napi::Array js_array = Napi::Array::New(env, path.count);

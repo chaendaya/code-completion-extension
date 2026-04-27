@@ -14,6 +14,27 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Code Completion",
+      "properties": {
+        "completion.parsingMode": {
+          "type": "number",
+          "enum": [0, 2],
+          "enumDescriptions": [
+            "Cut: 커서까지 잘라서 파싱 (실 사용 모드)",
+            "Lookahead: 전체 소스 + 커서 위치 별도 (평가/lookahead)"
+          ],
+          "default": 0,
+          "description": "Tree-sitter 컨버전 파싱 모드"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.toggleParsingMode",
+        "title": "Toggle Parsing Mode (0 ↔ 2)"
+      }
+    ],
     "configurationDefaults": {
       "editor.wordBasedSuggestions": "off",
       "editor.snippetSuggestions": "none",
