@@ -114,45 +114,6 @@ npm run compile
 
 ### 실행
 
-  워크스페이스 루트에서 다음 두 파일을 만드세요:                                                                    
-                                                                                                                    
-  .vscode/launch.json                                                                                               
-  {               
-    "version": "0.2.0",
-    "configurations": [
-      {                                                                                                             
-        "name": "Run Extension",
-        "type": "extensionHost",                                                                                    
-        "request": "launch",    
-        "args": [           
-          "--extensionDevelopmentPath=${workspaceFolder}"
-        ],                                                                                                          
-        "outFiles": [
-          "${workspaceFolder}/out/**/*.js"                                                                          
-        ],                                
-        "preLaunchTask": "${defaultBuildTask}"                                                                      
-      }
-    ]                                                                                                               
-  }               
-                                                                                                                    
-  .vscode/tasks.json
-  {
-    "version": "2.0.0",
-    "tasks": [         
-      {       
-        "type": "npm",
-        "script": "compile",                                                                                        
-        "group": {          
-          "kind": "build",                                                                                          
-          "isDefault": true
-        },                 
-        "problemMatcher": ["$tsc"],
-        "label": "npm: compile"    
-      }                        
-    ]                                                                                                               
-  }  
-
-
 VS Code에서 `code-completion-extension` 폴더를 열고 **F5**. Extension Development Host 창이 뜨면 거기서 지원 언어 파일을 열고 `Ctrl+Space`.
 
 
