@@ -129,3 +129,8 @@ VS Code에서 `code-completion-extension` 폴더를 열고 **F5**. Extension Dev
 4. `npx node-gyp rebuild`
 5. 확장 재시작 → `src/extension.ts`의 `discoverLanguages()`가 `resources/<lang>/`를 자동 인식
 
+<br>
+
+#### 부록
+vs code extension에서 직접 커서 위치마다 컨버전 실행해보며 디버깅하는 실험 방법
+![실험_Guideline](실험_Guideline.pdf)
