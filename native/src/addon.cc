@@ -60,10 +60,7 @@ extern "C" {
     TSStatePath ts_parser_parse_string_for_conversion_with_lookahead(TSParser *self, const TSTree *old_tree, const char *string, uint32_t full_length, uint32_t cursor_byte);
 
     // 2. 컨버전 결과 출력 (파일 or 화면)
-    void ts_parser_write_conversion_result(TSParser *self, TSStatePath *path, FILE *fp);
-
-    // 3. 로그 덤프
-    void ts_parser_write_logged_actions(TSParser *self, const char *filename);
+    void ts_state_path_write(TSStatePath *path, FILE *fp);
 }
 
 // =============================================================================
@@ -108,9 +105,6 @@ Napi::Value GetConversionResult(const Napi::CallbackInfo& info) {
         parser, NULL, source_code.c_str(), static_cast<uint32_t>(effective_length)
     );
 
-    // [로그 덤프] logged_actions.txt 저장
-    ts_parser_write_logged_actions(parser, "logged_actions.txt");
-
     // 6. 컨버전 로직 적용 (모드별 분기)
     TSStatePath path;
     if (mode == 2) {
@@ -126,7 +120,7 @@ Napi::Value GetConversionResult(const Napi::CallbackInfo& info) {
             parser, NULL, source_code.c_str(), static_cast<uint32_t>(effective_length)
         );
     }
-    ts_parser_write_conversion_result(parser, &path, stdout);
+    ts_state_path_write(&path, stdout);
     
     Napi::Array js_array = Napi::Array::New(env, path.count);
     for (uint32_t i = 0; i < path.count; i++) {
